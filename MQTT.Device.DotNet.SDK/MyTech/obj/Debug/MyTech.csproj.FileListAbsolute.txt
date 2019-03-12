@@ -1,0 +1,7 @@
+D:\git\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MyTech\obj\Debug\MyTech.csproj.CoreCompileInputs.cache
+D:\git\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MyTech\bin\Debug\MyTech.exe.config
+D:\git\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MyTech\bin\Debug\MyTech.exe
+D:\git\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MyTech\bin\Debug\MyTech.pdb
+D:\git\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MyTech\obj\Debug\MyTech.exe
+D:\git\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MyTech\obj\Debug\MyTech.pdb
+D:\git\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MyTech\obj\Debug\MyTech.csprojAssemblyReference.cache
