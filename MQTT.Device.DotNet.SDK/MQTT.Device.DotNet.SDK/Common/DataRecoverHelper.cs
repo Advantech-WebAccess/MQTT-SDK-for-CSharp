@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using MQTT.Device.DotNet.SDK.Model; // not yet
+using MQTT.Device.DotNet.SDK.Model; // not yet
 
 namespace MQTT.Device.DotNet.SDK
 {

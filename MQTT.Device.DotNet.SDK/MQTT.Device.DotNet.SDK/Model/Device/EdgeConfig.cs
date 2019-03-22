@@ -18,15 +18,14 @@ namespace MQTT.Device.DotNet.SDK.Model
         public class ScadaConfig
         {
             public string Id { get; set; }
-            public string Name { get; set; }
+            public int DeviceType { get; set; }
             public string Description { get; set; }
-            public string PrimaryIP { get; set; }
-            public string BackupIP { get; set; }
-            public int? PrimaryPort { get; set; }
-            public int? BackupPort { get; set; }
-            public SCADAConfigType? Type { get; set; }
+            public int HeartBeat { get; set; } //PIP
+            public int BackupDeviceId { get; set; } // BIP
 
-            public List<DeviceConfig> DeviceList { get; set; }
+            public List<AnalogTagConfig> AnalogTagList { get; set; }
+            public List<DiscreteTagConfig> DiscreteTagList { get; set; }
+            public List<TextTagConfig> TextTagList { get; set; }
 
             public ScadaConfig()
             {
@@ -34,24 +33,6 @@ namespace MQTT.Device.DotNet.SDK.Model
             }
         }
 
-        public class DeviceConfig
-        {
-            public string Id { get; set; }
-            public string Name { get; set; }
-            public int? ComPortNumber { get; set; }
-            public string Type { get; set; }
-            public string Description { get; set; }
-            public string IP { get; set; }
-            public int? Port { get; set; }
-
-            public List<AnalogTagConfig> AnalogTagList { get; set; }
-            public List<DiscreteTagConfig> DiscreteTagList { get; set; }
-            public List<TextTagConfig> TextTagList { get; set; }
-
-            public DeviceConfig()
-            {
-            }
-        }
 
         public class TagConfig
         {
@@ -59,8 +40,6 @@ namespace MQTT.Device.DotNet.SDK.Model
             public string Description { get; set; }
             public bool? ReadOnly { get; set; }
             public int? ArraySize { get; set; }
-            public bool? AlarmStatus { get; set; }
-            public bool? NeedLog { get; set; }
 
             public TagConfig()
             {
@@ -70,11 +49,14 @@ namespace MQTT.Device.DotNet.SDK.Model
 
         public class AnalogTagConfig : TagConfig
         {
+            public bool? NeedLog { get; set; }
             public double? SpanHigh { get; set; }
             public double? SpanLow { get; set; }
             public string EngineerUnit { get; set; }
-            public int? IntegerDisplayFormat { get; set; }
-            public int? FractionDisplayFormat { get; set; }
+
+            public string DisplayFormat { get; set; }
+            public bool? AlarmEnable { get; set; }
+            
             public int? HHPriority { get; set; }
             public double? HHAlarmLimit { get; set; }
             public int? HighPriority { get; set; }
@@ -91,6 +73,7 @@ namespace MQTT.Device.DotNet.SDK.Model
 
         public class DiscreteTagConfig : TagConfig
         {
+            public bool? AlarmEnable { get; set; }
             public string State0 { get; set; }
             public string State1 { get; set; }
             public string State2 { get; set; }

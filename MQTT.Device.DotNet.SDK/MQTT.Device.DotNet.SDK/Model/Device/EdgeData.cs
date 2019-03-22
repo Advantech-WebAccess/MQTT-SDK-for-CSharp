@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WISEPaaS.SCADA.DotNet.SDK.Model
+namespace MQTT.Device.DotNet.SDK.Model
 {
     public class EdgeData
     {

@@ -70,17 +70,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Const.cs" />
+    <Compile Include="Common\Converter.cs" />
     <Compile Include="Common\DataRecoverHelper.cs" />
     <Compile Include="Common\Enum.cs" />
     <Compile Include="Common\GZippedJson.cs" />
     <Compile Include="EdgeAgent.cs" />
+    <Compile Include="Model\Device\ConfigAck.cs" />
     <Compile Include="Model\Device\EdgeAgentOptions.cs" />
     <Compile Include="Model\Device\EdgeConfig.cs" />
+    <Compile Include="Model\Device\EdgeData.cs" />
+    <Compile Include="Model\Device\TimeSyncCommand.cs" />
+    <Compile Include="Model\Device\WriteValueCommand.cs" />
     <Compile Include="Model\Events\ConnectedEventArgs.cs" />
     <Compile Include="Model\Events\DisconnectedEventArgs.cs" />
     <Compile Include="Model\Events\MessageReceivedEventArgs.cs" />
     <Compile Include="Model\MQTTMessage\BaseMessage.cs" />
+    <Compile Include="Model\MQTTMessage\ConfigMessage.cs" />
     <Compile Include="Model\MQTTMessage\ConnectMessage.cs" />
+    <Compile Include="Model\MQTTMessage\DataMessage.cs" />
+    <Compile Include="Model\MQTTMessage\DisconnectMessage.cs" />
     <Compile Include="Model\MQTTMessage\HeartbeatMessage.cs" />
     <Compile Include="Model\MQTTMessage\LastWillMessage.cs" />
     <Compile Include="Model\Recovery\DataModel.cs" />

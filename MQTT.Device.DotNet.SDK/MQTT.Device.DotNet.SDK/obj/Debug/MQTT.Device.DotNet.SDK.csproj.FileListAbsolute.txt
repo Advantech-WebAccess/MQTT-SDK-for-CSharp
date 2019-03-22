@@ -22,4 +22,3 @@ D:\git\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MQTT.Device.DotNet.SDK\
 D:\git\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MQTT.Device.DotNet.SDK\bin\Debug\Newtonsoft.Json.dll
 D:\git\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MQTT.Device.DotNet.SDK\bin\Debug\Newtonsoft.Json.pdb
 D:\git\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MQTT.Device.DotNet.SDK\bin\Debug\Newtonsoft.Json.xml
-D:\git\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MQTT.Device.DotNet.SDK\obj\Debug\MQTT.Device.DotNet.SDK.csprojAssemblyReference.cache

@@ -35,6 +35,8 @@ namespace MQTT.Device.DotNet.SDK
         private string _cmdTopic;
         private string _ackTopic;
         private string _cfgAckTopic;
+        private string _actcTopic;
+        private string _actdTopic;
 
         private Timer _heartbeatTimer;
         private Timer _dataRecoverTimer;
@@ -120,62 +122,6 @@ namespace MQTT.Device.DotNet.SDK
             _mqttClient.PublishAsync(message);
         }
 
-        private void _test() {
-            try
-            {
-                if (_mqttClient != null && _mqttClient.IsConnected)
-                    return;
-
-                if (Options == null)
-                    return;
-
-                LastWillMessage lastWillMsg = new LastWillMessage();
-                string payload = JsonConvert.SerializeObject(lastWillMsg);
-                MqttApplicationMessage msg = new MqttApplicationMessage()
-                {
-                    Payload = Encoding.UTF8.GetBytes(payload),
-                    QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
-                    Retain = true,
-                    Topic = string.Format(MQTTTopic.ScadaConnTopic, Options.ScadaId)
-                };
-
-                string clientId = "EdgeAgent_" + Guid.NewGuid().ToString("N");
-                var ob = new MqttClientOptionsBuilder();
-                ob.WithClientId(clientId)
-                .WithCredentials(Options.MQTT.Username, Options.MQTT.Password)
-                .WithCleanSession()
-                .WithWillMessage(msg);
-
-                switch (Options.MQTT.ProtocolType)
-                {
-                    case Protocol.TCP:
-                        ob.WithTcpServer(Options.MQTT.HostName, Options.MQTT.Port);
-                        break;
-                    case Protocol.WebSocket:
-                        ob.WithWebSocketServer(Options.MQTT.HostName);
-                        break;
-                    default:
-                        ob.WithTcpServer(Options.MQTT.HostName, Options.MQTT.Port);
-                        break;
-                }
-
-                if (Options.UseSecure)
-                {
-                    ob.WithTls();
-                }
-
-                var mob = new ManagedMqttClientOptionsBuilder()
-                .WithAutoReconnectDelay(TimeSpan.FromMilliseconds(Options.ReconnectInterval))
-                .WithClientOptions(ob.Build())
-                .Build();
-
-                _mqttClient.StartAsync(mob);
-            }
-            catch (Exception ex)
-            {
-                //_logger.Error( ex.ToString() );
-            }
-        }
         private void _connect()
         {
             try
@@ -238,6 +184,20 @@ namespace MQTT.Device.DotNet.SDK
         {
             try
             {
+                if (_mqttClient != null && _mqttClient.IsConnected == false)
+                    return;
+
+                DisconnectMessage disconnectMsg = new DisconnectMessage();
+                string payload = JsonConvert.SerializeObject(disconnectMsg);
+
+                var message = new MqttApplicationMessageBuilder()
+                    .WithTopic((_options.Type == EdgeType.Gateway) ? _scadaConnTopic : _deviceConnTopic)
+                    .WithPayload(payload)
+                    .WithAtLeastOnceQoS()
+                    .WithRetainFlag(true)
+                    .Build();
+
+                _mqttClient.PublishAsync(message).ContinueWith(t => _mqttClient.StopAsync());
             }
             catch (Exception ex)
             {
@@ -249,7 +209,81 @@ namespace MQTT.Device.DotNet.SDK
         {
             try
             {
-                return true;
+                if (_mqttClient.IsConnected == false)
+                    return false;
+
+                if (edgeConfig == null)
+                    return false;
+
+                string payload = string.Empty;
+                bool result = false;
+                switch (action)
+                {
+                    case ActionType.Create:
+                        result = Converter.ConvertCreateOrUpdateConfig(edgeConfig, ref payload, _options.Heartbeat);
+                        break;
+                    case ActionType.Update:
+                        result = Converter.ConvertCreateOrUpdateConfig(edgeConfig, ref payload, _options.Heartbeat);
+                        break;
+                    case ActionType.Delete:
+                        result = Converter.ConvertDeleteConfig(edgeConfig, ref payload);
+                        break;
+                }
+
+                if (result)
+                {
+                    var message = new MqttApplicationMessageBuilder()
+                    .WithTopic(_configTopic)
+                    .WithPayload(payload)
+                    .WithAtLeastOnceQoS()
+                    .WithRetainFlag(false)
+                    .Build();
+
+                    _mqttClient.PublishAsync(message);
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                //_logger.Error( ex.ToString() );
+                return false;
+            }
+        }
+
+        private bool _sendData(EdgeData data)
+        {
+            try
+            {
+                if (data == null)
+                    return false;
+
+                List<string> payloads = new List<string>();
+                bool result = Converter.ConvertData(data, ref payloads);
+                if (result)
+                {
+                    foreach (var payload in payloads)
+                    {
+                        if (_mqttClient.IsConnected == false && _recoverHelper != null)
+                        {
+                            // keep data for MQTT connected
+                            _recoverHelper.Write(payload);
+                            return false;
+                        }
+
+                        var message = new MqttApplicationMessageBuilder()
+                        .WithTopic(_dataTopic)
+                        .WithPayload(payload)
+                        .WithAtLeastOnceQoS()
+                        .WithRetainFlag(false)
+                        .Build();
+
+                        _mqttClient.PublishAsync(message);
+                    }
+                }
+
+                //_logger.Info( "Send Data: {0}", payload );
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -289,7 +323,56 @@ namespace MQTT.Device.DotNet.SDK
         {
             try
             {
-               
+                if (MessageReceived == null)
+                    return;
+
+                string payload = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
+                //_logger.Info( "Recieved Message: {0}", payload );
+
+                JObject jObj = JObject.Parse(payload);
+                if (jObj == null || jObj["d"] == null)
+                    return;
+
+                dynamic obj = jObj as dynamic;
+                if (jObj["d"]["Cmd"] != null)
+                {
+                    switch ((string)obj.d.Cmd)
+                    {
+                        case "WV":
+                            WriteValueCommand wvcMsg = new WriteValueCommand();
+                            foreach (JProperty devObj in obj.d.Val)
+                            {
+                                WriteValueCommand.Device device = new WriteValueCommand.Device();
+                                device.Id = devObj.Name;
+                                foreach (JProperty tagObj in devObj.Value)
+                                {
+                                    WriteValueCommand.Tag tag = new WriteValueCommand.Tag();
+                                    tag.Name = tagObj.Name;
+                                    tag.Value = tagObj.Value;
+                                    device.TagList.Add(tag);
+                                }
+                                wvcMsg.DeviceList.Add(device);
+                            }
+                            //message = JsonConvert.DeserializeObject<WriteValueCommandMessage>( payload );
+                            MessageReceived(sender, new MessageReceivedEventArgs(MessageType.WriteValue, wvcMsg));
+                            break;
+                        case "WC":
+                            //MessageReceived( sender, new MessageReceivedEventArgs( MessageType.WriteConfig, message ) );
+                            break;
+                        case "TSyn":
+                            TimeSyncCommand tscMsg = new TimeSyncCommand();
+                            DateTime miniDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                            tscMsg.UTCTime = miniDateTime.AddSeconds(obj.d.UTC.Value);
+                            MessageReceived(sender, new MessageReceivedEventArgs(MessageType.TimeSync, tscMsg));
+                            break;
+                    }
+                }
+                else if (jObj["d"]["Cfg"] != null)
+                {
+                    ConfigAck ackMsg = new ConfigAck();
+                    ackMsg.Result = Convert.ToBoolean(obj.d.Cfg.Value);
+                    MessageReceived(this, new MessageReceivedEventArgs(MessageType.ConfigAck, ackMsg));
+                }
             }
             catch (Exception ex)
             {
@@ -302,26 +385,16 @@ namespace MQTT.Device.DotNet.SDK
         {
             try
             {
-                //_logger.Info( "MQTT Connect Success !" );
-
                 if (string.IsNullOrEmpty(_options.ScadaId) == false)
                 {
-                    /*
-                    public const string ConfigTopic = "iot-2/evt/wacfg/fmt/{0}";
-                    public const string DataTopic = "iot-2/evt/wadata/fmt/{0}";
-
-                    public const string ScadaConnTopic = "iot-2/evt/waconn/fmt/{0}";
-
-                    public const string ScadaCmdTopic = "iot-2/evt/wacmd/fmt/{0}";
-                    public const string DeviceCmdTopic = "iot-2/evt/wacmd/fmt/{0}/{1}";
-                    */
-
                     string scadaCmdTopic = string.Format("iot-2/evt/wacmd/fmt/{0}", _options.ScadaId);
                     string deviceCmdTopic = string.Format("iot-2/evt/wacmd/fmt/{0}/{1}", _options.ScadaId, _options.DeviceId);
 
                     _configTopic = string.Format("iot-2/evt/wacfg/fmt/{0}", _options.ScadaId);
                     _dataTopic = string.Format("iot-2/evt/wadata/fmt/{0}", _options.ScadaId);
-                    _scadaConnTopic = string.Format("iot-2/evt/waconn/fmt/{0}", _options.ScadaId);
+                    _scadaConnTopic = string.Format("iot-2/evt/waconn/fmt/{0}", _options.ScadaId);  
+                    _actcTopic = string.Format("iot-2/evt/waactc/fmt/{0}/{1}", _options.ScadaId, _options.ScadaId);
+                    _actdTopic = string.Format("iot-2/evt/waactd/fmt/{0}/{1}", _options.ScadaId, _options.ScadaId);
 
                     if (_options.Type == EdgeType.Gateway)
                         _cmdTopic = scadaCmdTopic;
@@ -343,7 +416,8 @@ namespace MQTT.Device.DotNet.SDK
 
                 // subscribe
                 _mqttClient.SubscribeAsync(new TopicFilterBuilder().WithTopic(_cmdTopic).WithAtLeastOnceQoS().Build());
-                _mqttClient.SubscribeAsync(new TopicFilterBuilder().WithTopic(_ackTopic).WithAtLeastOnceQoS().Build());
+                _mqttClient.SubscribeAsync(new TopicFilterBuilder().WithTopic(_actdTopic).WithAtLeastOnceQoS().Build());
+                _mqttClient.SubscribeAsync(new TopicFilterBuilder().WithTopic(_actcTopic).WithAtLeastOnceQoS().Build());
 
                 // publish
                 ConnectMessage connectMsg = new ConnectMessage();
@@ -370,7 +444,11 @@ namespace MQTT.Device.DotNet.SDK
         {
             try
             {
-                
+                if (Disconnected != null)
+                    Disconnected(this, new DisconnectedEventArgs(e.ClientWasConnected, e.Exception));
+
+                // stop heartbeat timer
+                _heartbeatTimer.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -378,17 +456,29 @@ namespace MQTT.Device.DotNet.SDK
             }
         }
 
+
         #endregion
 
         #region Public Method
 
-        public Task Test() {
-            return Task.Run( ()=> _test());
-        }
-
         public Task Connect()
         {
             return Task.Run(() => _connect());
+        }
+
+        public Task Disconnect()
+        {
+            return Task.Run(() => _disconnect());
+        }
+
+        public Task<bool> UploadConfig(ActionType action, EdgeConfig edgeConfig)
+        {
+            return Task.Run(() => _uploadConfig(action, edgeConfig));
+        }
+
+        public Task<bool> SendData(EdgeData data)
+        {
+            return Task.Run(() => _sendData(data));
         }
         #endregion
     }
