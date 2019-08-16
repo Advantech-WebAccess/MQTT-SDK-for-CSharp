@@ -1,4 +1,4 @@
-﻿namespace MQTT.Device.DotNet.SDK.Test
+﻿namespace MQTT.Service.DotNet.SDK.Test
 {
     partial class Form1
     {
@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.buttonConnect = new System.Windows.Forms.Button();
-            this.buttonUploadConfig = new System.Windows.Forms.Button();
             this.textBoxCloudProject = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -47,30 +46,19 @@
             this.textBoxPwd = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.checkBoxSSL = new System.Windows.Forms.CheckBox();
-            this.buttonSendData = new System.Windows.Forms.Button();
             this.comboBoxComm = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.buttonDisconnect = new System.Windows.Forms.Button();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.numTTagCount = new System.Windows.Forms.NumericUpDown();
-            this.lblTTagCount = new System.Windows.Forms.Label();
-            this.numDTagCount = new System.Windows.Forms.NumericUpDown();
-            this.lblDTagCount = new System.Windows.Forms.Label();
-            this.numATagCount = new System.Windows.Forms.NumericUpDown();
-            this.lblATagCount = new System.Windows.Forms.Label();
-            this.lblDataFreq = new System.Windows.Forms.Label();
-            this.numDataFreq = new System.Windows.Forms.NumericUpDown();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.numTTagCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDTagCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numATagCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDataFreq)).BeginInit();
+            this.listBoxLogger2 = new System.Windows.Forms.ListBox();
+            this.buttonClear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonConnect
             // 
             this.buttonConnect.Font = new System.Drawing.Font("新細明體", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.buttonConnect.Location = new System.Drawing.Point(503, 12);
+            this.buttonConnect.Location = new System.Drawing.Point(422, 12);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(155, 57);
             this.buttonConnect.TabIndex = 0;
@@ -78,22 +66,11 @@
             this.buttonConnect.UseVisualStyleBackColor = true;
             this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
             // 
-            // buttonUploadConfig
-            // 
-            this.buttonUploadConfig.Font = new System.Drawing.Font("新細明體", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.buttonUploadConfig.Location = new System.Drawing.Point(584, 79);
-            this.buttonUploadConfig.Name = "buttonUploadConfig";
-            this.buttonUploadConfig.Size = new System.Drawing.Size(155, 62);
-            this.buttonUploadConfig.TabIndex = 1;
-            this.buttonUploadConfig.Text = "Upload Config";
-            this.buttonUploadConfig.UseVisualStyleBackColor = true;
-            this.buttonUploadConfig.Click += new System.EventHandler(this.buttonUploadConfig_Click);
-            // 
             // textBoxCloudProject
             // 
             this.textBoxCloudProject.Location = new System.Drawing.Point(235, 19);
             this.textBoxCloudProject.Name = "textBoxCloudProject";
-            this.textBoxCloudProject.Size = new System.Drawing.Size(210, 25);
+            this.textBoxCloudProject.Size = new System.Drawing.Size(171, 25);
             this.textBoxCloudProject.TabIndex = 2;
             this.textBoxCloudProject.Text = "CloudProject";
             this.textBoxCloudProject.TextChanged += new System.EventHandler(this.textBoxCloudProject_TextChanged);
@@ -122,7 +99,7 @@
             // 
             this.textBoxCloudNode.Location = new System.Drawing.Point(235, 60);
             this.textBoxCloudNode.Name = "textBoxCloudNode";
-            this.textBoxCloudNode.Size = new System.Drawing.Size(210, 25);
+            this.textBoxCloudNode.Size = new System.Drawing.Size(171, 25);
             this.textBoxCloudNode.TabIndex = 5;
             this.textBoxCloudNode.Text = "CloudNode";
             this.textBoxCloudNode.TextChanged += new System.EventHandler(this.textBoxCloudNode_TextChanged);
@@ -141,7 +118,7 @@
             // 
             this.textBoxIp.Location = new System.Drawing.Point(235, 143);
             this.textBoxIp.Name = "textBoxIp";
-            this.textBoxIp.Size = new System.Drawing.Size(210, 25);
+            this.textBoxIp.Size = new System.Drawing.Size(171, 25);
             this.textBoxIp.TabIndex = 9;
             this.textBoxIp.Text = "172.16.12.112";
             // 
@@ -159,7 +136,7 @@
             // 
             this.textBoxGroupId.Location = new System.Drawing.Point(235, 102);
             this.textBoxGroupId.Name = "textBoxGroupId";
-            this.textBoxGroupId.Size = new System.Drawing.Size(210, 25);
+            this.textBoxGroupId.Size = new System.Drawing.Size(171, 25);
             this.textBoxGroupId.TabIndex = 7;
             // 
             // label5
@@ -176,7 +153,7 @@
             // 
             this.textBoxPort.Location = new System.Drawing.Point(235, 183);
             this.textBoxPort.Name = "textBoxPort";
-            this.textBoxPort.Size = new System.Drawing.Size(210, 25);
+            this.textBoxPort.Size = new System.Drawing.Size(171, 25);
             this.textBoxPort.TabIndex = 11;
             this.textBoxPort.Text = "1883";
             // 
@@ -194,7 +171,7 @@
             // 
             this.textBoxUser.Location = new System.Drawing.Point(235, 221);
             this.textBoxUser.Name = "textBoxUser";
-            this.textBoxUser.Size = new System.Drawing.Size(210, 25);
+            this.textBoxUser.Size = new System.Drawing.Size(171, 25);
             this.textBoxUser.TabIndex = 13;
             this.textBoxUser.Text = "admin";
             // 
@@ -212,7 +189,7 @@
             // 
             this.textBoxPwd.Location = new System.Drawing.Point(235, 261);
             this.textBoxPwd.Name = "textBoxPwd";
-            this.textBoxPwd.Size = new System.Drawing.Size(210, 25);
+            this.textBoxPwd.Size = new System.Drawing.Size(171, 25);
             this.textBoxPwd.TabIndex = 15;
             this.textBoxPwd.Text = "your password";
             // 
@@ -235,23 +212,12 @@
             this.checkBoxSSL.TabIndex = 19;
             this.checkBoxSSL.UseVisualStyleBackColor = true;
             // 
-            // buttonSendData
-            // 
-            this.buttonSendData.Font = new System.Drawing.Font("新細明體", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.buttonSendData.Location = new System.Drawing.Point(584, 147);
-            this.buttonSendData.Name = "buttonSendData";
-            this.buttonSendData.Size = new System.Drawing.Size(155, 62);
-            this.buttonSendData.TabIndex = 20;
-            this.buttonSendData.Text = "Send Data";
-            this.buttonSendData.UseVisualStyleBackColor = true;
-            this.buttonSendData.Click += new System.EventHandler(this.buttonSendData_Click);
-            // 
             // comboBoxComm
             // 
             this.comboBoxComm.FormattingEnabled = true;
             this.comboBoxComm.Location = new System.Drawing.Point(235, 334);
             this.comboBoxComm.Name = "comboBoxComm";
-            this.comboBoxComm.Size = new System.Drawing.Size(130, 23);
+            this.comboBoxComm.Size = new System.Drawing.Size(171, 23);
             this.comboBoxComm.TabIndex = 21;
             this.comboBoxComm.SelectedIndexChanged += new System.EventHandler(this.comboBoxComm_SelectedIndexChanged);
             // 
@@ -268,7 +234,7 @@
             // buttonDisconnect
             // 
             this.buttonDisconnect.Font = new System.Drawing.Font("新細明體", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.buttonDisconnect.Location = new System.Drawing.Point(664, 12);
+            this.buttonDisconnect.Location = new System.Drawing.Point(583, 12);
             this.buttonDisconnect.Name = "buttonDisconnect";
             this.buttonDisconnect.Size = new System.Drawing.Size(155, 58);
             this.buttonDisconnect.TabIndex = 23;
@@ -281,148 +247,45 @@
             this.lblStatus.BackColor = System.Drawing.Color.Gray;
             this.lblStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblStatus.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblStatus.Location = new System.Drawing.Point(708, 407);
+            this.lblStatus.Location = new System.Drawing.Point(786, 19);
             this.lblStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(186, 39);
+            this.lblStatus.Size = new System.Drawing.Size(157, 39);
             this.lblStatus.TabIndex = 24;
             this.lblStatus.Text = "DISCONNECTED";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblStatus.Click += new System.EventHandler(this.LblStatus_Click);
             // 
-            // numTTagCount
+            // listBoxLogger2
             // 
-            this.numTTagCount.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.numTTagCount.Location = new System.Drawing.Point(396, 409);
-            this.numTTagCount.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.numTTagCount.Name = "numTTagCount";
-            this.numTTagCount.Size = new System.Drawing.Size(120, 34);
-            this.numTTagCount.TabIndex = 56;
-            this.numTTagCount.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
+            this.listBoxLogger2.FormattingEnabled = true;
+            this.listBoxLogger2.ItemHeight = 15;
+            this.listBoxLogger2.Location = new System.Drawing.Point(421, 85);
+            this.listBoxLogger2.Name = "listBoxLogger2";
+            this.listBoxLogger2.Size = new System.Drawing.Size(948, 364);
+            this.listBoxLogger2.TabIndex = 25;
             // 
-            // lblTTagCount
+            // buttonClear
             // 
-            this.lblTTagCount.AutoSize = true;
-            this.lblTTagCount.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblTTagCount.Location = new System.Drawing.Point(391, 381);
-            this.lblTTagCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblTTagCount.Name = "lblTTagCount";
-            this.lblTTagCount.Size = new System.Drawing.Size(153, 25);
-            this.lblTTagCount.TabIndex = 55;
-            this.lblTTagCount.Text = "Text Tag Count";
-            // 
-            // numDTagCount
-            // 
-            this.numDTagCount.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.numDTagCount.Location = new System.Drawing.Point(205, 407);
-            this.numDTagCount.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.numDTagCount.Name = "numDTagCount";
-            this.numDTagCount.Size = new System.Drawing.Size(120, 34);
-            this.numDTagCount.TabIndex = 54;
-            this.numDTagCount.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            // 
-            // lblDTagCount
-            // 
-            this.lblDTagCount.AutoSize = true;
-            this.lblDTagCount.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblDTagCount.Location = new System.Drawing.Point(200, 381);
-            this.lblDTagCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblDTagCount.Name = "lblDTagCount";
-            this.lblDTagCount.Size = new System.Drawing.Size(189, 25);
-            this.lblDTagCount.TabIndex = 53;
-            this.lblDTagCount.Text = "Discrete Tag Count";
-            // 
-            // numATagCount
-            // 
-            this.numATagCount.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.numATagCount.Location = new System.Drawing.Point(19, 409);
-            this.numATagCount.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.numATagCount.Name = "numATagCount";
-            this.numATagCount.Size = new System.Drawing.Size(120, 34);
-            this.numATagCount.TabIndex = 52;
-            this.numATagCount.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            // 
-            // lblATagCount
-            // 
-            this.lblATagCount.AutoSize = true;
-            this.lblATagCount.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblATagCount.Location = new System.Drawing.Point(16, 381);
-            this.lblATagCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblATagCount.Name = "lblATagCount";
-            this.lblATagCount.Size = new System.Drawing.Size(182, 25);
-            this.lblATagCount.TabIndex = 51;
-            this.lblATagCount.Text = "Analog Tag Count";
-            // 
-            // lblDataFreq
-            // 
-            this.lblDataFreq.AutoSize = true;
-            this.lblDataFreq.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblDataFreq.Location = new System.Drawing.Point(555, 381);
-            this.lblDataFreq.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblDataFreq.Name = "lblDataFreq";
-            this.lblDataFreq.Size = new System.Drawing.Size(158, 25);
-            this.lblDataFreq.TabIndex = 57;
-            this.lblDataFreq.Text = "Data Frequency";
-            // 
-            // numDataFreq
-            // 
-            this.numDataFreq.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.numDataFreq.Location = new System.Drawing.Point(560, 409);
-            this.numDataFreq.Name = "numDataFreq";
-            this.numDataFreq.Size = new System.Drawing.Size(98, 34);
-            this.numDataFreq.TabIndex = 58;
-            this.numDataFreq.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // timer1
-            // 
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.buttonClear.Location = new System.Drawing.Point(1272, 46);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Size = new System.Drawing.Size(84, 31);
+            this.buttonClear.TabIndex = 26;
+            this.buttonClear.Text = "clear";
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.ButtonClear_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(897, 450);
-            this.Controls.Add(this.lblDataFreq);
-            this.Controls.Add(this.numDataFreq);
-            this.Controls.Add(this.numTTagCount);
-            this.Controls.Add(this.lblTTagCount);
-            this.Controls.Add(this.numDTagCount);
-            this.Controls.Add(this.lblDTagCount);
-            this.Controls.Add(this.numATagCount);
-            this.Controls.Add(this.lblATagCount);
+            this.ClientSize = new System.Drawing.Size(1381, 464);
+            this.Controls.Add(this.buttonClear);
+            this.Controls.Add(this.listBoxLogger2);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.buttonDisconnect);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.comboBoxComm);
-            this.Controls.Add(this.buttonSendData);
             this.Controls.Add(this.checkBoxSSL);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -439,14 +302,9 @@
             this.Controls.Add(this.textBoxCloudNode);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxCloudProject);
-            this.Controls.Add(this.buttonUploadConfig);
             this.Controls.Add(this.buttonConnect);
             this.Name = "Form1";
-            this.Text = "MQTT Device SDK Sample";
-            ((System.ComponentModel.ISupportInitialize)(this.numTTagCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDTagCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numATagCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDataFreq)).EndInit();
+            this.Text = "MQTT Service SDK Sample";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -455,7 +313,6 @@
         #endregion
 
         private System.Windows.Forms.Button buttonConnect;
-        private System.Windows.Forms.Button buttonUploadConfig;
         private System.Windows.Forms.TextBox textBoxCloudProject;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -472,21 +329,13 @@
         private System.Windows.Forms.TextBox textBoxPwd;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox checkBoxSSL;
-        private System.Windows.Forms.Button buttonSendData;
         private System.Windows.Forms.ComboBox comboBoxComm;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button buttonDisconnect;
         private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.NumericUpDown numTTagCount;
-        private System.Windows.Forms.Label lblTTagCount;
-        private System.Windows.Forms.NumericUpDown numDTagCount;
-        private System.Windows.Forms.Label lblDTagCount;
-        private System.Windows.Forms.NumericUpDown numATagCount;
-        private System.Windows.Forms.Label lblATagCount;
-
-        private System.Windows.Forms.Label lblDataFreq;
-        private System.Windows.Forms.NumericUpDown numDataFreq;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ListBox listBoxLogger2;
+        private System.Windows.Forms.Button buttonClear;
     }
 }
 

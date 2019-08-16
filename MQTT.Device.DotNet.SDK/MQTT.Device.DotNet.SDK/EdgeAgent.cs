@@ -388,7 +388,7 @@ namespace MQTT.Device.DotNet.SDK
                 if (string.IsNullOrEmpty(_options.ScadaId) == false)
                 {
                     string scadaCmdTopic = string.Format("iot-2/evt/wacmd/fmt/{0}", _options.ScadaId);
-                    string deviceCmdTopic = string.Format("iot-2/evt/wacmd/fmt/{0}/{1}", _options.ScadaId, _options.DeviceId);
+                    string deviceCmdTopic = string.Format("iot-2/evt/wacmd/fmt/{0}/{1}", _options.ScadaId, _options.ScadaId);
 
                     _configTopic = string.Format("iot-2/evt/wacfg/fmt/{0}", _options.ScadaId);
                     _dataTopic = string.Format("iot-2/evt/wadata/fmt/{0}", _options.ScadaId);

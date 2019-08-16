@@ -1,0 +1,4 @@
+D:\gitlab\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MQTT.Service.DotNet.SDK.Test\bin\Debug\MQTT.Device.DotNet.SDK.Test.exe
+D:\gitlab\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MQTT.Service.DotNet.SDK.Test\bin\Debug\MQTT.Device.DotNet.SDK.dll
+D:\gitlab\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MQTT.Service.DotNet.SDK.Test\bin\Debug\MQTTnet.dll
+D:\gitlab\MQTT-Device-SDK-for-CSharp\MQTT.Device.DotNet.SDK\MQTT.Service.DotNet.SDK.Test\bin\Debug\Newtonsoft.Json.dll

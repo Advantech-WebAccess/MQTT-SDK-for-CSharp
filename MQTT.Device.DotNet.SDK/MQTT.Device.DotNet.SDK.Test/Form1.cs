@@ -133,6 +133,8 @@ namespace MQTT.Device.DotNet.SDK.Test
 
                     ScadaId = textBoxGroupId.Text,
 
+                    Type = EdgeType.Device,
+
                     Heartbeat = 60000,   // default is 60 seconds,
 
                     DataRecover = true,
