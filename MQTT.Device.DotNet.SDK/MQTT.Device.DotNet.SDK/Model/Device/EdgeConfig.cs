@@ -21,6 +21,8 @@ namespace MQTT.Device.DotNet.SDK.Model
             public int DeviceType { get; set; }
             public string Description { get; set; }
             public int HeartBeat { get; set; } //PIP
+
+            public int PortNumber { get; set; } //PORT
             public int BackupDeviceId { get; set; } // BIP
 
             public List<AnalogTagConfig> AnalogTagList { get; set; }

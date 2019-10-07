@@ -35,6 +35,8 @@ namespace MQTT.Device.DotNet.SDK
 
                     Description = config.Scada.Description,
 
+                    PortNumber = config.Scada.PortNumber,
+
                     HeartBeat = config.Scada.HeartBeat,
 
                     BackupDeviceId = config.Scada.BackupDeviceId

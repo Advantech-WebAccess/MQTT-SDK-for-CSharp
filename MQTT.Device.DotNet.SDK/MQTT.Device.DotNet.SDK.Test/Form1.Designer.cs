@@ -61,10 +61,13 @@
             this.lblDataFreq = new System.Windows.Forms.Label();
             this.numDataFreq = new System.Windows.Forms.NumericUpDown();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label10 = new System.Windows.Forms.Label();
+            this.numericUpDownPort = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numTTagCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDTagCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numATagCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDataFreq)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonConnect
@@ -131,7 +134,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label3.Location = new System.Drawing.Point(12, 141);
+            this.label3.Location = new System.Drawing.Point(11, 171);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(75, 20);
             this.label3.TabIndex = 10;
@@ -139,7 +142,7 @@
             // 
             // textBoxIp
             // 
-            this.textBoxIp.Location = new System.Drawing.Point(235, 143);
+            this.textBoxIp.Location = new System.Drawing.Point(234, 173);
             this.textBoxIp.Name = "textBoxIp";
             this.textBoxIp.Size = new System.Drawing.Size(210, 25);
             this.textBoxIp.TabIndex = 9;
@@ -166,7 +169,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label5.Location = new System.Drawing.Point(12, 181);
+            this.label5.Location = new System.Drawing.Point(11, 211);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(44, 20);
             this.label5.TabIndex = 12;
@@ -174,7 +177,7 @@
             // 
             // textBoxPort
             // 
-            this.textBoxPort.Location = new System.Drawing.Point(235, 183);
+            this.textBoxPort.Location = new System.Drawing.Point(234, 213);
             this.textBoxPort.Name = "textBoxPort";
             this.textBoxPort.Size = new System.Drawing.Size(210, 25);
             this.textBoxPort.TabIndex = 11;
@@ -184,7 +187,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label6.Location = new System.Drawing.Point(12, 220);
+            this.label6.Location = new System.Drawing.Point(11, 250);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(163, 20);
             this.label6.TabIndex = 14;
@@ -192,7 +195,7 @@
             // 
             // textBoxUser
             // 
-            this.textBoxUser.Location = new System.Drawing.Point(235, 221);
+            this.textBoxUser.Location = new System.Drawing.Point(234, 251);
             this.textBoxUser.Name = "textBoxUser";
             this.textBoxUser.Size = new System.Drawing.Size(210, 25);
             this.textBoxUser.TabIndex = 13;
@@ -202,7 +205,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label7.Location = new System.Drawing.Point(12, 260);
+            this.label7.Location = new System.Drawing.Point(11, 290);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(198, 20);
             this.label7.TabIndex = 16;
@@ -210,7 +213,7 @@
             // 
             // textBoxPwd
             // 
-            this.textBoxPwd.Location = new System.Drawing.Point(235, 261);
+            this.textBoxPwd.Location = new System.Drawing.Point(234, 291);
             this.textBoxPwd.Name = "textBoxPwd";
             this.textBoxPwd.Size = new System.Drawing.Size(210, 25);
             this.textBoxPwd.TabIndex = 15;
@@ -220,7 +223,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label8.Location = new System.Drawing.Point(12, 297);
+            this.label8.Location = new System.Drawing.Point(11, 327);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(116, 20);
             this.label8.TabIndex = 18;
@@ -229,7 +232,7 @@
             // checkBoxSSL
             // 
             this.checkBoxSSL.AutoSize = true;
-            this.checkBoxSSL.Location = new System.Drawing.Point(235, 302);
+            this.checkBoxSSL.Location = new System.Drawing.Point(234, 332);
             this.checkBoxSSL.Name = "checkBoxSSL";
             this.checkBoxSSL.Size = new System.Drawing.Size(18, 17);
             this.checkBoxSSL.TabIndex = 19;
@@ -249,7 +252,7 @@
             // comboBoxComm
             // 
             this.comboBoxComm.FormattingEnabled = true;
-            this.comboBoxComm.Location = new System.Drawing.Point(235, 334);
+            this.comboBoxComm.Location = new System.Drawing.Point(234, 364);
             this.comboBoxComm.Name = "comboBoxComm";
             this.comboBoxComm.Size = new System.Drawing.Size(130, 23);
             this.comboBoxComm.TabIndex = 21;
@@ -259,7 +262,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label9.Location = new System.Drawing.Point(12, 336);
+            this.label9.Location = new System.Drawing.Point(11, 366);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(94, 20);
             this.label9.TabIndex = 22;
@@ -281,7 +284,7 @@
             this.lblStatus.BackColor = System.Drawing.Color.Gray;
             this.lblStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblStatus.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblStatus.Location = new System.Drawing.Point(708, 407);
+            this.lblStatus.Location = new System.Drawing.Point(697, 452);
             this.lblStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(186, 39);
@@ -292,7 +295,7 @@
             // numTTagCount
             // 
             this.numTTagCount.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.numTTagCount.Location = new System.Drawing.Point(396, 409);
+            this.numTTagCount.Location = new System.Drawing.Point(395, 439);
             this.numTTagCount.Maximum = new decimal(new int[] {
             999999,
             0,
@@ -311,7 +314,7 @@
             // 
             this.lblTTagCount.AutoSize = true;
             this.lblTTagCount.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblTTagCount.Location = new System.Drawing.Point(391, 381);
+            this.lblTTagCount.Location = new System.Drawing.Point(390, 411);
             this.lblTTagCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTTagCount.Name = "lblTTagCount";
             this.lblTTagCount.Size = new System.Drawing.Size(153, 25);
@@ -321,7 +324,7 @@
             // numDTagCount
             // 
             this.numDTagCount.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.numDTagCount.Location = new System.Drawing.Point(205, 407);
+            this.numDTagCount.Location = new System.Drawing.Point(204, 437);
             this.numDTagCount.Maximum = new decimal(new int[] {
             999999,
             0,
@@ -340,7 +343,7 @@
             // 
             this.lblDTagCount.AutoSize = true;
             this.lblDTagCount.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblDTagCount.Location = new System.Drawing.Point(200, 381);
+            this.lblDTagCount.Location = new System.Drawing.Point(199, 411);
             this.lblDTagCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDTagCount.Name = "lblDTagCount";
             this.lblDTagCount.Size = new System.Drawing.Size(189, 25);
@@ -350,7 +353,7 @@
             // numATagCount
             // 
             this.numATagCount.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.numATagCount.Location = new System.Drawing.Point(19, 409);
+            this.numATagCount.Location = new System.Drawing.Point(18, 439);
             this.numATagCount.Maximum = new decimal(new int[] {
             999999,
             0,
@@ -369,7 +372,7 @@
             // 
             this.lblATagCount.AutoSize = true;
             this.lblATagCount.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblATagCount.Location = new System.Drawing.Point(16, 381);
+            this.lblATagCount.Location = new System.Drawing.Point(15, 411);
             this.lblATagCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblATagCount.Name = "lblATagCount";
             this.lblATagCount.Size = new System.Drawing.Size(182, 25);
@@ -380,7 +383,7 @@
             // 
             this.lblDataFreq.AutoSize = true;
             this.lblDataFreq.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblDataFreq.Location = new System.Drawing.Point(555, 381);
+            this.lblDataFreq.Location = new System.Drawing.Point(554, 411);
             this.lblDataFreq.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDataFreq.Name = "lblDataFreq";
             this.lblDataFreq.Size = new System.Drawing.Size(158, 25);
@@ -390,7 +393,7 @@
             // numDataFreq
             // 
             this.numDataFreq.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.numDataFreq.Location = new System.Drawing.Point(560, 409);
+            this.numDataFreq.Location = new System.Drawing.Point(559, 439);
             this.numDataFreq.Name = "numDataFreq";
             this.numDataFreq.Size = new System.Drawing.Size(98, 34);
             this.numDataFreq.TabIndex = 58;
@@ -405,11 +408,36 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label10.Location = new System.Drawing.Point(14, 136);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(186, 20);
+            this.label10.TabIndex = 60;
+            this.label10.Text = "雲端端口ID (Port Id): ";
+            // 
+            // numericUpDownPort
+            // 
+            this.numericUpDownPort.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.numericUpDownPort.Location = new System.Drawing.Point(235, 133);
+            this.numericUpDownPort.Name = "numericUpDownPort";
+            this.numericUpDownPort.Size = new System.Drawing.Size(98, 34);
+            this.numericUpDownPort.TabIndex = 61;
+            this.numericUpDownPort.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(897, 450);
+            this.ClientSize = new System.Drawing.Size(897, 559);
+            this.Controls.Add(this.numericUpDownPort);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.lblDataFreq);
             this.Controls.Add(this.numDataFreq);
             this.Controls.Add(this.numTTagCount);
@@ -447,6 +475,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numDTagCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numATagCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDataFreq)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -487,6 +516,8 @@
         private System.Windows.Forms.Label lblDataFreq;
         private System.Windows.Forms.NumericUpDown numDataFreq;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown numericUpDownPort;
     }
 }
 

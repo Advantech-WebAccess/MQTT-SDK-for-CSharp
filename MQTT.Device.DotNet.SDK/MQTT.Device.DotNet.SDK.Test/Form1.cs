@@ -11,6 +11,10 @@ using System.Windows.Forms;
 using MQTT.Device.DotNet.SDK;
 using MQTT.Device.DotNet.SDK.Model;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
+
 namespace MQTT.Device.DotNet.SDK.Test
 {
     public partial class Form1 : Form
@@ -37,12 +41,21 @@ namespace MQTT.Device.DotNet.SDK.Test
 
             for (int j = 1; j <= numATagCount.Value; j++)
             {
+
+                // simulation data
+                int indexData, indexQCODE;
+                indexData = gloublev;
+                indexQCODE = gloublev % 3;
+
+                JObject jObj = new JObject(
+                    new JProperty("0", indexData),
+                    new JProperty("1", indexQCODE));
+
                 EdgeData.Tag aTag = new EdgeData.Tag()
                 {
                     DeviceId = textBoxGroupId.Text,
                     TagName = "ATag" + j,
-                    //Value = random.Next(100)
-                    Value = gloublev
+                    Value = jObj
                 };
                 data.TagList.Add(aTag);
             }
@@ -199,6 +212,7 @@ namespace MQTT.Device.DotNet.SDK.Test
             {
                 Id = textBoxGroupId.Text.Trim(),
                 Description = "descrp",
+                PortNumber = (int)numericUpDownPort.Value,
                 HeartBeat = 60,
                 BackupDeviceId = 0
                 
@@ -215,7 +229,7 @@ namespace MQTT.Device.DotNet.SDK.Test
                     Name = "ATag" + j,
                     Description = "ATag " + j,
                     ReadOnly = false,
-                    ArraySize = 0,
+                    ArraySize = 2, 
 
                     NeedLog = true,
                     SpanHigh = 1000,
@@ -241,7 +255,7 @@ namespace MQTT.Device.DotNet.SDK.Test
                     Name = "DTag" + j,
                     Description = "DTag " + j,
                     ReadOnly = false,
-                    ArraySize = 0,
+                    ArraySize = 1,
 
                     AlarmEnable = false,
                     State0 = "0",
@@ -270,7 +284,7 @@ namespace MQTT.Device.DotNet.SDK.Test
                     Name = "TTag" + j,
                     Description = "TTag " + j,
                     ReadOnly = false,
-                    ArraySize = 0,
+                    ArraySize = 2,
                 };
                 config.Scada.TextTagList.Add(textTag);
             }

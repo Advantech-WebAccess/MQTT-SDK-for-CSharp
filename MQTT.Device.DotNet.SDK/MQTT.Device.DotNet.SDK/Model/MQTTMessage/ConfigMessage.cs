@@ -30,6 +30,9 @@ namespace MQTT.Device.DotNet.SDK.Model
             [JsonProperty( PropertyName = "Hbt" )]
             public int? HeartBeat { get; set; }
 
+            [JsonProperty(PropertyName = "PID")]
+            public int? PortNumber { get; set; }
+
             [JsonProperty( PropertyName = "BID" )]
             public int? BackupDeviceId { get; set; }
 
