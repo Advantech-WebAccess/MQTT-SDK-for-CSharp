@@ -19,8 +19,7 @@ namespace MQTT.Device.DotNet.SDK
 
     public enum EdgeType
     {
-        Gateway = 0,
-        Device = 1
+        Gateway = 0
     }
 
     public enum MessageType

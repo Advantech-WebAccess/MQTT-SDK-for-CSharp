@@ -37,7 +37,7 @@ namespace MQTT.Device.DotNet.SDK.Test
 
             EdgeData data = new EdgeData();
 
-            gloublev++;
+            //gloublev++;
 
             for (int j = 1; j <= numATagCount.Value; j++)
             {
@@ -114,10 +114,22 @@ namespace MQTT.Device.DotNet.SDK.Test
                     WriteValueCommand wvcMsg = (WriteValueCommand)e.Message;
                     foreach (var device in wvcMsg.DeviceList)
                     {
-                        Console.WriteLine("DeviceId: {0}", device.Id);
                         foreach (var tag in device.TagList)
-                        {
-                            Console.WriteLine("TagName: {0}, Value: {1}", tag.Name, tag.Value.ToString());
+                        {                       
+                            if (tag.Value.GetType() == typeof(JObject))
+                            {
+                                //Array Tag
+                                JObject arrayTag = JObject.Parse(tag.Value.ToString());
+                                string index = arrayTag.First.Path;
+                                var value = arrayTag.First.First;
+                                Console.WriteLine("TagName: {0}, Index: {1}, Value: {2}", tag.Name, index , value.ToString());
+                            }
+                            else
+                            {
+                                //Non-Array Tag
+                                Console.WriteLine("TagName: {0}, Value: {1}", tag.Name, tag.Value.ToString());
+                            }
+                           
                         }
                     }
                     break;
@@ -146,7 +158,7 @@ namespace MQTT.Device.DotNet.SDK.Test
 
                     ScadaId = textBoxGroupId.Text,
 
-                    Type = EdgeType.Device,
+                    Type = EdgeType.Gateway,
 
                     Heartbeat = 60000,   // default is 60 seconds,
 
@@ -255,7 +267,7 @@ namespace MQTT.Device.DotNet.SDK.Test
                     Name = "DTag" + j,
                     Description = "DTag " + j,
                     ReadOnly = false,
-                    ArraySize = 1,
+                    ArraySize = 0,
 
                     AlarmEnable = false,
                     State0 = "0",

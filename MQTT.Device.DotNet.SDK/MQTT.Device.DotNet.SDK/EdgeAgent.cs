@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 
 using System.Timers;
 using MQTT.Device.DotNet.SDK.Model;
+using System.ComponentModel;
+using System.Net.Http.Headers;
 
 namespace MQTT.Device.DotNet.SDK
 {
@@ -339,9 +341,20 @@ namespace MQTT.Device.DotNet.SDK
                     switch ((string)obj.d.Cmd)
                     {
                         case "WV":
+                            
                             WriteValueCommand wvcMsg = new WriteValueCommand();
                             foreach (JProperty devObj in obj.d.Val)
                             {
+                                WriteValueCommand.Device device = new WriteValueCommand.Device();
+                                device.Id = _options.DeviceId;
+                               
+                                WriteValueCommand.Tag tag = new WriteValueCommand.Tag();
+                                tag.Name = devObj.Name;
+                                tag.Value = devObj.Value; 
+                                device.TagList.Add(tag);                           
+                               
+                                wvcMsg.DeviceList.Add(device);
+                                /*
                                 WriteValueCommand.Device device = new WriteValueCommand.Device();
                                 device.Id = devObj.Name;
                                 foreach (JProperty tagObj in devObj.Value)
@@ -352,6 +365,7 @@ namespace MQTT.Device.DotNet.SDK
                                     device.TagList.Add(tag);
                                 }
                                 wvcMsg.DeviceList.Add(device);
+                                */
                             }
                             //message = JsonConvert.DeserializeObject<WriteValueCommandMessage>( payload );
                             MessageReceived(sender, new MessageReceivedEventArgs(MessageType.WriteValue, wvcMsg));
@@ -392,13 +406,15 @@ namespace MQTT.Device.DotNet.SDK
 
                     _configTopic = string.Format("iot-2/evt/wacfg/fmt/{0}", _options.ScadaId);
                     _dataTopic = string.Format("iot-2/evt/wadata/fmt/{0}", _options.ScadaId);
-                    _scadaConnTopic = string.Format("iot-2/evt/waconn/fmt/{0}", _options.ScadaId);  
+                    _scadaConnTopic = string.Format("iot-2/evt/waconn/fmt/{0}", _options.ScadaId);
+                    //_deviceConnTopic= string.Format("iot-2/evt/waconn/fmt/{0}/{1}", _options.ScadaId, _options.ScadaId);
                     _actcTopic = string.Format("iot-2/evt/waactc/fmt/{0}/{1}", _options.ScadaId, _options.ScadaId);
                     _actdTopic = string.Format("iot-2/evt/waactd/fmt/{0}/{1}", _options.ScadaId, _options.ScadaId);
-
+                    /*
                     if (_options.Type == EdgeType.Gateway)
                         _cmdTopic = scadaCmdTopic;
                     else
+                    */
                         _cmdTopic = deviceCmdTopic;
                 }
 
