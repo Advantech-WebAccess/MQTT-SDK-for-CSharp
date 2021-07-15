@@ -9,12 +9,11 @@ namespace MQTT.Device.DotNet.SDK.Model
 {
     public class ConnectMessage : BaseMessage
     {
-        [JsonProperty( PropertyName = "d" )]
-        public DObject D { get; set; }
+        [JsonProperty(PropertyName = "d")]
+        public Dictionary<string, DObject> ScadaList { get; set; }
 
         public ConnectMessage()
         {
-            D = new DObject();
         }
 
         public class DObject

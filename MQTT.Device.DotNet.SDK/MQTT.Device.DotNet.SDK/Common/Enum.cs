@@ -19,7 +19,8 @@ namespace MQTT.Device.DotNet.SDK
 
     public enum EdgeType
     {
-        Gateway = 0
+        Gateway = 0,
+        Device = 1
     }
 
     public enum MessageType
@@ -27,7 +28,9 @@ namespace MQTT.Device.DotNet.SDK
         WriteValue = 0,
         WriteConfig,
         TimeSync,
-        ConfigAck
+        ConfigAck,
+        ConnectAck,
+        DataOn
     }
 
     public enum SCADAConfigType

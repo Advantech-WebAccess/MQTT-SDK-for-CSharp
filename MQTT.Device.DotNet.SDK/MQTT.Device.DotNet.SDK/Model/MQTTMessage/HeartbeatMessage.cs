@@ -10,22 +10,23 @@ namespace MQTT.Device.DotNet.SDK.Model
     public class HeartbeatMessage : BaseMessage
     {
         [JsonProperty( PropertyName = "d" )]
-        public DObject D { get; set; }
+        public Dictionary<string, ScadaObject> ScadaList { get; set; }
 
         public HeartbeatMessage()
         {
-            D = new DObject();
         }
 
-        public class DObject
+        public class ScadaObject
         {
-            [JsonProperty( PropertyName = "Hbt" )]
+            [JsonProperty(PropertyName = "Hbt")]
             public int Hbt { get; set; }
 
-            public DObject()
+            public ScadaObject()
             {
                 Hbt = 1;
             }
         }
+
+      
     }
 }

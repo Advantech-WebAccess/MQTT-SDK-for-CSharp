@@ -16,8 +16,6 @@ using System.Threading.Tasks;
 
 using System.Timers;
 using MQTT.Device.DotNet.SDK.Model;
-using System.ComponentModel;
-using System.Net.Http.Headers;
 
 namespace MQTT.Device.DotNet.SDK
 {
@@ -112,6 +110,9 @@ namespace MQTT.Device.DotNet.SDK
         private void _heartbeatTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             HeartbeatMessage heartbeatMsg = new HeartbeatMessage();
+            heartbeatMsg.ScadaList = new Dictionary<string, HeartbeatMessage.ScadaObject>();
+            HeartbeatMessage.ScadaObject scada = new HeartbeatMessage.ScadaObject();
+            heartbeatMsg.ScadaList.Add(_options.ScadaId, scada);
             string payload = JsonConvert.SerializeObject(heartbeatMsg);
 
             var message = new MqttApplicationMessageBuilder()
@@ -135,6 +136,9 @@ namespace MQTT.Device.DotNet.SDK
                     return;
 
                 LastWillMessage lastWillMsg = new LastWillMessage();
+                lastWillMsg.ScadaList = new Dictionary<string, LastWillMessage.DObject>();
+                LastWillMessage.DObject scada = new LastWillMessage.DObject();
+                lastWillMsg.ScadaList.Add(_options.ScadaId, scada);
                 string payload = JsonConvert.SerializeObject(lastWillMsg);
                 MqttApplicationMessage msg = new MqttApplicationMessage()
                 {
@@ -174,6 +178,8 @@ namespace MQTT.Device.DotNet.SDK
                 .WithClientOptions(ob.Build())
                 .Build();
 
+
+                
                 _mqttClient.StartAsync(mob);
             }
             catch (Exception ex)
@@ -190,6 +196,9 @@ namespace MQTT.Device.DotNet.SDK
                     return;
 
                 DisconnectMessage disconnectMsg = new DisconnectMessage();
+                disconnectMsg.ScadaList = new Dictionary<string, DisconnectMessage.DObject>();
+                DisconnectMessage.DObject scada = new DisconnectMessage.DObject();
+                disconnectMsg.ScadaList.Add(_options.ScadaId, scada);
                 string payload = JsonConvert.SerializeObject(disconnectMsg);
 
                 var message = new MqttApplicationMessageBuilder()
@@ -341,31 +350,28 @@ namespace MQTT.Device.DotNet.SDK
                     switch ((string)obj.d.Cmd)
                     {
                         case "WV":
-                            
                             WriteValueCommand wvcMsg = new WriteValueCommand();
                             foreach (JProperty devObj in obj.d.Val)
                             {
                                 WriteValueCommand.Device device = new WriteValueCommand.Device();
-                                device.Id = _options.DeviceId;
-                               
-                                WriteValueCommand.Tag tag = new WriteValueCommand.Tag();
-                                tag.Name = devObj.Name;
-                                tag.Value = devObj.Value; 
-                                device.TagList.Add(tag);                           
-                               
-                                wvcMsg.DeviceList.Add(device);
-                                /*
-                                WriteValueCommand.Device device = new WriteValueCommand.Device();
                                 device.Id = devObj.Name;
+                                int iArryaTag = 0;
                                 foreach (JProperty tagObj in devObj.Value)
                                 {
                                     WriteValueCommand.Tag tag = new WriteValueCommand.Tag();
                                     tag.Name = tagObj.Name;
                                     tag.Value = tagObj.Value;
                                     device.TagList.Add(tag);
+                                    iArryaTag++;
+                                }
+                                if (iArryaTag == 0)    //not array type
+                                {
+                                    WriteValueCommand.Tag tag = new WriteValueCommand.Tag();
+                                    tag.Name = devObj.Name;
+                                    tag.Value = devObj.Value;
+                                    device.TagList.Add(tag);
                                 }
                                 wvcMsg.DeviceList.Add(device);
-                                */
                             }
                             //message = JsonConvert.DeserializeObject<WriteValueCommandMessage>( payload );
                             MessageReceived(sender, new MessageReceivedEventArgs(MessageType.WriteValue, wvcMsg));
@@ -379,6 +385,10 @@ namespace MQTT.Device.DotNet.SDK
                             tscMsg.UTCTime = miniDateTime.AddSeconds(obj.d.UTC.Value);
                             MessageReceived(sender, new MessageReceivedEventArgs(MessageType.TimeSync, tscMsg));
                             break;
+                        case "DOn":
+                            DataOnCommand donMsg = new DataOnCommand();
+                            MessageReceived( sender, new MessageReceivedEventArgs( MessageType.DataOn, donMsg) );
+                            break;
                     }
                 }
                 else if (jObj["d"]["Cfg"] != null)
@@ -386,6 +396,12 @@ namespace MQTT.Device.DotNet.SDK
                     ConfigAck ackMsg = new ConfigAck();
                     ackMsg.Result = Convert.ToBoolean(obj.d.Cfg.Value);
                     MessageReceived(this, new MessageReceivedEventArgs(MessageType.ConfigAck, ackMsg));
+                }
+                else if (jObj["d"]["Con"] != null)
+                {
+                    ConnectAck ackMsg = new ConnectAck();
+                    ackMsg.Result = Convert.ToBoolean(obj.d.Con.Value);
+                    MessageReceived(this, new MessageReceivedEventArgs(MessageType.ConnectAck, ackMsg));
                 }
             }
             catch (Exception ex)
@@ -407,14 +423,15 @@ namespace MQTT.Device.DotNet.SDK
                     _configTopic = string.Format("iot-2/evt/wacfg/fmt/{0}", _options.ScadaId);
                     _dataTopic = string.Format("iot-2/evt/wadata/fmt/{0}", _options.ScadaId);
                     _scadaConnTopic = string.Format("iot-2/evt/waconn/fmt/{0}", _options.ScadaId);
-                    //_deviceConnTopic= string.Format("iot-2/evt/waconn/fmt/{0}/{1}", _options.ScadaId, _options.ScadaId);
+                    //  kelly
+                    _deviceConnTopic = string.Format("iot-2/evt/waconn/fmt/{0}", _options.ScadaId);
+                    //
                     _actcTopic = string.Format("iot-2/evt/waactc/fmt/{0}/{1}", _options.ScadaId, _options.ScadaId);
                     _actdTopic = string.Format("iot-2/evt/waactd/fmt/{0}/{1}", _options.ScadaId, _options.ScadaId);
-                    /*
+
                     if (_options.Type == EdgeType.Gateway)
                         _cmdTopic = scadaCmdTopic;
                     else
-                    */
                         _cmdTopic = deviceCmdTopic;
                 }
 
@@ -437,6 +454,9 @@ namespace MQTT.Device.DotNet.SDK
 
                 // publish
                 ConnectMessage connectMsg = new ConnectMessage();
+                connectMsg.ScadaList = new Dictionary<string, ConnectMessage.DObject>();
+                ConnectMessage.DObject scada = new ConnectMessage.DObject();
+                connectMsg.ScadaList.Add(_options.ScadaId, scada);
                 string payload = JsonConvert.SerializeObject(connectMsg);
                 var message = new MqttApplicationMessageBuilder()
                 .WithTopic((_options.Type == EdgeType.Gateway) ? _scadaConnTopic : _deviceConnTopic)
