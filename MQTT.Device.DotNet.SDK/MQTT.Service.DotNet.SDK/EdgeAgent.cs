@@ -27,6 +27,7 @@ namespace MQTT.Service.DotNet.SDK
         private string _configTopic;
         private string _dataTopic;
         private string _scadaConnTopic;
+        private string _wastTopic;
 
         private string _cmdTopic;
 
@@ -189,7 +190,8 @@ namespace MQTT.Service.DotNet.SDK
 
                     _configTopic = string.Format("iot-2/evt/wacfg/fmt/{0}", _options.ScadaId);
                     _dataTopic = string.Format("iot-2/evt/wadata/fmt/{0}", _options.ScadaId);
-                    _scadaConnTopic = string.Format("iot-2/evt/waconn/fmt/{0}", _options.ScadaId);  
+                    _scadaConnTopic = string.Format("iot-2/evt/waconn/fmt/{0}", _options.ScadaId);
+                    _wastTopic = string.Format("iot-2/evt/wast/fmt/{0}", _options.ScadaId);
                 }
 
                 if (Connected != null)
@@ -211,6 +213,15 @@ namespace MQTT.Service.DotNet.SDK
 
                 _mqttClient.PublishAsync(message);
 
+
+                var message1 = new MqttApplicationMessageBuilder()
+                .WithTopic(_wastTopic)
+                .WithPayload(payload)
+                .WithAtLeastOnceQoS()
+                .WithRetainFlag(true)
+                .Build();
+
+                _mqttClient.PublishAsync(message1);
             }
             catch (Exception ex)
             {
@@ -222,6 +233,18 @@ namespace MQTT.Service.DotNet.SDK
         {
             try
             {
+                DisconnectMessage disconnectMsg = new DisconnectMessage();
+                string payload = JsonConvert.SerializeObject(disconnectMsg);
+
+                var message = new MqttApplicationMessageBuilder()
+                .WithTopic(_wastTopic)
+                .WithPayload(payload)
+                .WithAtLeastOnceQoS()
+                .WithRetainFlag(true)
+                .Build();
+
+                _mqttClient.PublishAsync(message);
+
                 if (Disconnected != null)
                     Disconnected(this, new DisconnectedEventArgs(e.ClientWasConnected, e.Exception));
 

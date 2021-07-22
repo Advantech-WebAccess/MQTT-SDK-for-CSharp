@@ -37,6 +37,8 @@ namespace MQTT.Device.DotNet.SDK
         private string _cfgAckTopic;
         private string _actcTopic;
         private string _actdTopic;
+        private string _stTopic;
+        private static bool WAKernelRun = false;
 
         private Timer _heartbeatTimer;
         private Timer _dataRecoverTimer;
@@ -274,7 +276,7 @@ namespace MQTT.Device.DotNet.SDK
                 {
                     foreach (var payload in payloads)
                     {
-                        if (_mqttClient.IsConnected == false && _recoverHelper != null)
+                        if (_mqttClient.IsConnected == false && _recoverHelper != null && WAKernelRun == true)
                         {
                             // keep data for MQTT connected
                             _recoverHelper.Write(payload);
@@ -399,9 +401,14 @@ namespace MQTT.Device.DotNet.SDK
                 }
                 else if (jObj["d"]["Con"] != null)
                 {
-                    ConnectAck ackMsg = new ConnectAck();
-                    ackMsg.Result = Convert.ToBoolean(obj.d.Con.Value);
-                    MessageReceived(this, new MessageReceivedEventArgs(MessageType.ConnectAck, ackMsg));
+                    WAKernelRun = true;
+                    //ConnectAck ackMsg = new ConnectAck();
+                    //ackMsg.Result = Convert.ToBoolean(obj.d.Con.Value);
+                    //MessageReceived(this, new MessageReceivedEventArgs(MessageType.ConnectAck, ackMsg));
+                }
+                else if (jObj["d"]["DsC"] != null)
+                {
+                    WAKernelRun = false;
                 }
             }
             catch (Exception ex)
@@ -429,6 +436,8 @@ namespace MQTT.Device.DotNet.SDK
                     _actcTopic = string.Format("iot-2/evt/waactc/fmt/{0}/{1}", _options.ScadaId, _options.ScadaId);
                     _actdTopic = string.Format("iot-2/evt/waactd/fmt/{0}/{1}", _options.ScadaId, _options.ScadaId);
 
+                    _stTopic = string.Format("iot-2/evt/wast/fmt/{0}", _options.ScadaId);
+
                     if (_options.Type == EdgeType.Gateway)
                         _cmdTopic = scadaCmdTopic;
                     else
@@ -449,8 +458,9 @@ namespace MQTT.Device.DotNet.SDK
 
                 // subscribe
                 _mqttClient.SubscribeAsync(new TopicFilterBuilder().WithTopic(_cmdTopic).WithAtLeastOnceQoS().Build());
-                _mqttClient.SubscribeAsync(new TopicFilterBuilder().WithTopic(_actdTopic).WithAtLeastOnceQoS().Build());
+                //_mqttClient.SubscribeAsync(new TopicFilterBuilder().WithTopic(_actdTopic).WithAtLeastOnceQoS().Build());
                 _mqttClient.SubscribeAsync(new TopicFilterBuilder().WithTopic(_actcTopic).WithAtLeastOnceQoS().Build());
+                _mqttClient.SubscribeAsync(new TopicFilterBuilder().WithTopic(_stTopic).WithAtLeastOnceQoS().Build());
 
                 // publish
                 ConnectMessage connectMsg = new ConnectMessage();
